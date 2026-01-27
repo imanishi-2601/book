@@ -1,0 +1,86 @@
+<!-- エラーメッセージ -->
+<% if @book.errors.any? %>
+  <div class="alert alert-danger">
+    <ul>
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="user-show">
+  <!-- 左：User info + New book -->
+  <div class="user-left">
+
+
+    <h1>User info</h1>
+
+    <div class="avatar-box">
+      <% if @user.avatar.attached? %>
+        <%= image_tag @user.avatar, class: "avatar-image" %>
+      <% else %>
+        <span class="avatar-placeholder">NO IMAGE</span>
+      <% end %>
+    </div>
+
+    <table>
+      <tr>
+        <th>name</th>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr>
+        <th>introduction</th>
+        <td><%= @user.introduction %></td>
+      </tr>
+    </table>
+
+    <h1>New book</h1>
+
+
+    <%= form_with model: @book, local: true do |f| %>
+      <h3>Title</h3>
+      <%= f.text_field :title %>
+
+      <h3>Opinion</h3>
+      <%= f.text_area :body %>
+
+      <%= f.submit "Create Book" %>
+    <% end %>
+  </div>
+
+  <!-- 右：Books一覧（Title / Opinion） -->
+  <div class="user-right">
+    <h1>Books</h1>
+
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th class="book-image"></th>
+          <th>Title</th>
+          <th>Opinion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @books.each do |book| %>
+          <tr>
+                <!-- Image -->
+            <td>
+              <% if book.user.avatar.attached? %>
+                <%= image_tag book.user.avatar, width: 60, height: 60 %>
+              <% else %>
+                <div class="no-image">NO IMAGE</div>
+              <% end %>
+            </td>
+
+            <!-- Title（クリックで show） -->
+            <td><%= link_to book.title, book_path(book) %></td>
+
+            <!-- Opinion -->
+            <td><%= book.body %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -70,6 +70,13 @@ main {
   flex: 1;
 }
 
+.user-show { display: flex; gap: 40px; align-items: flex-start; }
+.user-left { width: 280px; }
+.user-right { flex: 1; }
+
+.users-table { width: 100%; border-collapse: collapse; }
+.users-table th, .users-table td { border-bottom: 1px solid #ddd; padding: 12px 10px; text-align: left; }
+
 footer {
   background-color: #fff;
   color: #000;

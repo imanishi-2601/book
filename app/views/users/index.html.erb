@@ -1,0 +1,83 @@
+<div class="user-show">
+  <!-- 左：自分の情報 -->
+  <div class="user-left">
+    <h1>User info</h1>
+    <div class="avatar-box">
+      <% if @user.avatar.attached? %>
+        <%= image_tag @user.avatar, class: "avatar-image" %>
+      <% else %>
+        <span class="avatar-placeholder">NO IMAGE</span>
+      <% end %>
+    </div>
+
+    <table>
+      <tr>
+        <th>name</th>
+        <td><%= @user.name %></td>
+      </tr>
+      <tr>
+        <th>introduction</th>
+        <td><%= @user.introduction %></td>
+      </tr>
+    </table>
+
+    <tr>
+      <td>
+        <%= link_to "user_info_edit", edit_user_path(current_user) %>
+      </td>
+    </tr>
+
+    <h1>New book</h1>
+    <%= form_with model: @book, local: true do |f| %>
+      <h3>Title</h3>
+      <%= f.text_field :title %>
+
+      <h3>Opinion</h3>
+      <%= f.text_area :body %>
+
+      <%= f.submit "Create Book" %>
+    <% end %>
+  </div>
+
+  <!-- 右：ユーザー一覧 -->
+  <div class="user-right">
+    <h1>Users</h1>
+
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+
+    <% book = user.books.order(created_at: :desc).first %>
+          <!-- ↑ ①はここ。Showリンクの直前 -->
+
+          <tr>
+            <td>
+              <% if user.avatar.attached? %>
+                <%= image_tag user.avatar, width: 40, height: 40 %>
+              <% else %>
+                <span>-</span>
+              <% end %>
+            </td>
+
+            <td><%= user.name %></td>
+
+            <td>
+              <% if book.present? %>
+                <%= link_to "Show", book_path(book) %>
+              <% else %>
+                -
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

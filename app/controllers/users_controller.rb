@@ -2,6 +2,12 @@ class UsersController < ApplicationController
   # 認証をスキップ: サインアップ（new, create）はログイン前に行うため
   allow_unauthenticated_access only: [:new, :create]
 
+  def index
+    @user  = Current.session.user   # 左（自分）
+    @book  = Book.new               # 左（New book）
+    @users = User.all               # 右（ユーザー一覧）
+  end
+
   def new
     @user = User.new
   end
@@ -22,31 +28,26 @@ class UsersController < ApplicationController
     end
   end
 
-  def update
-    @user = User.find(params[:id])
-
-    # 他人の更新を防ぐ（重要）
-    unless @user == Current.session.user
-      redirect_to root_path, alert: "権限がありません"
-      return
-    end
-
-    if @user.update(user_params)
-      redirect_to user_path(@user), notice: "画像を更新しました"
-    else
-      @book = Book.new
-      render :show, status: :unprocessable_entity
-    end
+  # ✅ 自分の編集画面だけ表示（URLの:idに依存しない）
+  def edit
+    @user = Current.session.user
   end
 
-  def user_params
-    params.require(:user).permit(:name, :email_address, :password, :password_confirmation, :avatar)
+  # ✅ 自分だけ更新（URLの:idに依存しない）
+  def update
+    @user = Current.session.user
+
+    if @user.update(user_params)
+      redirect_to user_path(@user), notice: "ユーザー情報を更新しました"
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
 
+  # ✅ user_paramsは1つだけに統一（avatarも許可するならここに残す）
   def user_params
-    # name, email_address, password, password_confirmation を許可
-    params.require(:user).permit(:name, :email_address, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email_address, :password, :password_confirmation, :avatar)
   end
 end

@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
   # ユーザー登録（サインアップ）のためのルーティングを追加
-  resources :users, only: [:new, :create, :show, :update] , path: 'users', path_names: { new: 'sign_up' }
+  resources :users,
+    only: [:new, :create, :index, :show, :edit, :update] ,
+    path: 'users',
+    path_names: { new: 'sign_up' }
+
   resource :session
   resources :passwords, param: :token
-  resources :books, only: [:create]
+  resources :books, only: [:index, :create, :show, :edit, :destroy]
 
 
   root "homes#top"

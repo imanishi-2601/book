@@ -1,13 +1,10 @@
-<h1>User info</h1>
+<h1>User 詳細</h1>
+<p>### USERS/SHOW TEMPLATE LOADED ###</p>
 
-<div class="avatar-box">
-  <% if @user.avatar.attached? %>
-    <%= image_tag @user.avatar, class: "avatar-image" %>
-  <% else %>
-    <span class="avatar-placeholder">NO IMAGE</span>
-  <% end %>
-</div>
-
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
 
 <h2><%= @user.name %></h2>
 <p>ID: <%= @user.id %></p>
