@@ -1,0 +1,76 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+  background-color: #000
+}
+
+header ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 12px;
+}
+
+header a {
+  color: #fff;        /* 文字を白にする */
+  text-decoration: none;
+}
+
+/* ユーザー画像枠 */
+.avatar-box {
+  width: 200px;
+  height: 200px;
+  background-color: #dcdcdc; /* グレー背景 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* 画像がある場合 */
+.avatar-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+/* NO IMAGE 表示 */
+.avatar-placeholder {
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+body {
+  background-color: #fff;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  background-color: #fff;
+  color: #000;
+}

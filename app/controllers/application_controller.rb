@@ -1,0 +1,16 @@
+class ApplicationController < ActionController::Base
+  include Authentication
+  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
+  allow_browser versions: :modern
+  before_action :require_authentication
+
+  private
+
+  def after_authentication_url
+    user_path(Current.user)
+  end
+
+  def after_logout_url
+    root_path
+  end
+end

@@ -1,0 +1,21 @@
+<h1>User info</h1>
+
+<div class="avatar-box">
+  <% if @user.avatar.attached? %>
+    <%= image_tag @user.avatar, class: "avatar-image" %>
+  <% else %>
+    <span class="avatar-placeholder">NO IMAGE</span>
+  <% end %>
+</div>
+
+
+<h2><%= @user.name %></h2>
+<p>ID: <%= @user.id %></p>
+<h1>New book</h1>
+<%= form_with model: @book, local: true do |f| %>
+  <h3>Title</h3>
+  <%= f.text_field :title %>
+  <h3>Opinion</h3>
+  <%= f.text_area :body %>
+  <%= f.submit 'Create Book' %>
+<% end %>
