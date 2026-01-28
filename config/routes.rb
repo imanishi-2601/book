@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
 
   root "homes#top"
-  get "about", to: "homes#about"
+  get "home/about", to: "homes#about"
   get  "/users/sign_up", to: "users#new"
   post "/users/sign_up", to: "users#create"
 
