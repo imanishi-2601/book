@@ -1,47 +1,7 @@
 <div class="container user-show">
   <div class="row">
-    <!-- 左：User info + New book（サイドバー） -->
-    <div class="col-md-3 user-left">
-      <h1>User info</h1>
 
-      <div class="avatar-box">
-        <% if @user.profile_image.attached? %>
-          <%= image_tag @user.profile_image, class: "avatar-image" %>
-        <% else %>
-          <span class="no-image">NO IMAGE</span>
-        <% end %>
-      </div>
-
-      <table>
-        <tr>
-          <th>name</th>
-          <td><%= @user.name %></td>
-        </tr>
-        <tr>
-          <th>introduction</th>
-          <td><%= @user.introduction %></td>
-        </tr>
-      </table>
-
-      <!-- 自分のユーザー編集リンク（テキスト無し） -->
-      <%= link_to edit_user_path(@user),
-                  class: "btn btn-outline-secondary btn-block user-edit-btn" do %>
-        <i class="fa-solid fa-user-gear"></i>
-      <% end %>
-
-      <h1>New book</h1>
-      <%= form_with model: @book, url: books_path, local: true do |f| %>
-        <h3>Title</h3>
-        <%= f.text_field :title %>
-
-        <h3>Opinion</h3>
-        <%= f.text_area :body %>
-
-        <div class="mt-2">
-          <%= f.submit "Create Book" %>
-        </div>
-      <% end %>
-    </div>
+    <%= render "shared/left", user: @user, new_book: @new_book %>
 
     <!-- 右：投稿一覧 -->
     <div class="col-md-8 offset-md-1 user-right">
@@ -76,5 +36,6 @@
         </tbody>
       </table>
     </div>
+
   </div>
 </div>

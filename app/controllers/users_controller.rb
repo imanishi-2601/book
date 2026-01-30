@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def index
     @user  = Current.session.user   # 左（自分）
-    @book  = Book.new               # 左（New book）
+    @new_book  = Book.new               # 左（New book）
     @users = User.all               # 右（ユーザー一覧）
   end
 
@@ -16,8 +16,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @book  = Book.new
-    @books = @user.books
+    @user     = User.find(params[:id])
+    @new_book = Book.new
+    @books    = @user.books
   end
 
   def create

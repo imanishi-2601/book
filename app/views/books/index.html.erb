@@ -1,8 +1,8 @@
 <!-- エラーメッセージ -->
-<% if @book.errors.any? %>
+<% if @new_book.errors.any? %>
   <div class="alert alert-danger">
     <ul>
-      <% @book.errors.full_messages.each do |message| %>
+      <% @new_book.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
     </ul>
@@ -12,85 +12,43 @@
 <div class="container user-show">
   <div class="row">
 
-    <!-- 左：User info + New book -->
-    <div class="col-md-3 user-left">
-
-      <h1>User info</h1>
-
-      <div class="avatar-box">
-        <% if @user.profile_image.attached? %>
-          <%= image_tag @user.profile_image, class: "avatar-image" %>
-        <% else %>
-          <span class="no-image">NO IMAGE</span>
-        <% end %>
-      </div>
-
-      <table>
-        <tr>
-          <th>name</th>
-          <td><%= @user.name %></td>
-        </tr>
-        <tr>
-          <th>introduction</th>
-          <td><%= @user.introduction %></td>
-        </tr>
-      </table>
-
-      <%= link_to edit_user_path(@user),
-                  class: "btn btn-outline-secondary btn-block user-edit-btn" do %>
-        <i class="fa-solid fa-user-gear"></i>
-      <% end %>
-
-      <h1>New book</h1>
-
-      <%= form_with model: @book, local: true do |f| %>
-        <h3>Title</h3>
-        <%= f.text_field :title %>
-
-        <h3>Opinion</h3>
-        <%= f.text_area :body %>
-
-        <div class="form-actions">
-          <%= f.submit "Create Book" %>
-        </div>
-      <% end %>
-    </div>
+    <%= render "shared/left", user: @user, new_book: @new_book %>
 
     <!-- 右：Books一覧 -->
-<div class="col-md-8 offset-md-1 user-right">
-  <h1>Books</h1>
+    <div class="col-md-8 offset-md-1 user-right">
+      <h1>Books</h1>
 
-  <table class="users-table">
-    <thead>
-      <tr>
-        <th class="book-image"></th>
-        <th>Title</th>
-        <th>Opinion</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @books.each do |book| %>
-        <tr>
-          <td>
-            <%= link_to user_path(book.user), class: "user-card-link" do %>
-              <div class="avatar-box">
-                <% if book.user.profile_image.attached? %>
-                  <%= image_tag book.user.profile_image, width: 80, height: 80, alt: "" %>
-                <% else %>
-                  <div class="no-image">NO IMAGE</div>
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th class="book-image"></th>
+            <th>Title</th>
+            <th>Opinion</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @books.each do |book| %>
+            <tr>
+              <td class="pe-4">
+                <%= link_to user_path(book.user), class: "user-card-link" do %>
+                  <div class="avatar-box">
+                    <% if book.user.profile_image.attached? %>
+                      <%= image_tag book.user.profile_image, width: 80, height: 80, alt: "" %>
+                    <% else %>
+                      <div class="no-image">NO IMAGE</div>
+                    <% end %>
+                  </div>
                 <% end %>
-              </div>
-              <div class="user-name">
-                <%= book.user.name %>
-              </div>
-            <% end %>
-          </td>
+              </td>
 
-          <td><%= link_to book.title, book_path(book) %></td>
-          <td><%= book.body %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+              <td><%= link_to book.title, book_path(book) %></td>
+              <td><%= book.body %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
 </div>

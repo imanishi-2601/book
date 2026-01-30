@@ -1,86 +1,44 @@
 <div class="container user-show">
   <div class="row">
-  <!-- 左：User info + New book -->
-  <div class="col-md-3 user-left">
-    <h1>User info</h1>
 
-  <div class="avatar-box">
-      <% if @user.profile_image.attached? %>
-        <%= image_tag @user.profile_image, class: "avatar-image" %>
-      <% else %>
-        <span class="no-image">NO IMAGE</span>
-      <% end %>
+    <%= render "shared/left", user: @user, new_book: @new_book %>
 
-  </div>
+    <!-- 右：Book detail -->
+    <div class="col-md-8 offset-md-1 user-right">
+      <h1>Book detail</h1>
 
-  <table>
-    <tr>
-      <th>name</th>
-      <td><%= link_to @book.user.name, user_path(@book.user) %></td>
-    </tr>
-    <tr>
-      <th>introduction</th>
-      <td><%= @user.introduction %></td>
-    </tr>
-  </table>
+      <table class="users-table">
+        <tbody>
+          <tr>
+            <td>
+              <%= link_to user_path(@book.user), class: "user-card-link" do %>
+                <div class="avatar-box">
+                  <% if @book.user.profile_image.attached? %>
+                    <%= image_tag @book.user.profile_image, width: 80, height: 80, alt: "" %>
+                  <% else %>
+                    <div class="no-image">NO IMAGE</div>
+                  <% end %>
+                </div>
+                <div class="user-name">
+                  <%= @book.user.name %>
+                </div>
+              <% end %>
+            </td>
 
-  <!-- ★ここだけ変更：添付のボタン形式に -->
-  <%= link_to edit_user_path(@book.user),
-              class: "btn btn-outline-secondary btn-block user-edit-btn" do %>
-    <i class="fa-solid fa-user-gear"></i>
-  <% end %>
-
-    <h1>New book</h1>
-    <%= form_with model: @new_book, url: books_path, local: true do |f| %>
-      <h3>Title</h3>
-      <%= f.text_field :title %>
-
-      <h3>Opinion</h3>
-      <%= f.text_area :body %>
-
-      <%= f.submit "Create Book" %>
-    <% end %>
-  </div>
-
-
-
-  <!-- 右：Books一覧（Title / Opinion） -->
-  <div class="col-md-8 offset-md-1 user-right">
-    <h1>Book detail</h1>
-
-    <table class="users-table">
-
-      <tbody>
-                      <!-- Image -->
-        <tr>
-          <td>
-          <%= link_to user_path(@book.user), class: "user-card-link" do %>
-          <div class="avatar-box">
-          <% if @book.user.profile_image.attached? %>
-            <%= image_tag @book.user.profile_image, width: 80, height: 80, alt: "" %>
-          <% else %>
-            <div class="no-image">NO IMAGE</div>
-          <% end %>
-          </div>
-          <div class="user-name">
-            <%= @book.user.name %>
-          </div>
-          <% end %>
-          </td>
-
-          <!-- Title（クリックで show） -->
             <td><%= link_to @book.title, book_path(@book) %></td>
             <td><%= @book.body %></td>
+
             <td>
-            <% if @book.user == current_user %>
-            <%= link_to "Edit", edit_book_path(@book) %>
-            <%= link_to "Destroy", book_path(@book),
-                       data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
-            <% end %>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+              <% if @book.user == current_user %>
+                <%= link_to "Edit", edit_book_path(@book) %>
+                <%= link_to "Destroy", book_path(@book),
+                            data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
   </div>
-</div>
 </div>

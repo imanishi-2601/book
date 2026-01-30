@@ -97,7 +97,9 @@ main {
 }
 
 .user-show { display: flex; gap: 40px; align-items: flex-start; }
-.user-left { width: 280px; }
+.user-left { width: 280px;
+              word-break: break-word;
+              overflow-wrap: break-word; }
 .user-right { flex: 1; }
 
 .users-table { width: 100%; border-collapse: collapse; }
@@ -212,4 +214,13 @@ body {
   display: inline-flex;     /* ← 縦並びを制御できる文脈にする */
   flex-direction: column;  /* ← 上から下に積む */
   line-height: 1;          /* ← 余計な高さを消す */
+}
+
+.user-left table th {   /*左カラム改行しない*/
+  white-space: nowrap;
+}
+
+.user-left table td {   /*左カラム本文だけ改行する*/
+  max-width: 180px;
+  overflow-wrap: anywhere;
 }
